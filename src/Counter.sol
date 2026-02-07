@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
-import {
-    Initializable
-} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+
 contract Counter is Initializable {
     uint256 public counter;
 
@@ -14,6 +13,7 @@ contract Counter is Initializable {
         counter += 2;
         return counter;
     }
+
     function getRealCounter() public view returns (uint256) {
         uint256 val;
         assembly {

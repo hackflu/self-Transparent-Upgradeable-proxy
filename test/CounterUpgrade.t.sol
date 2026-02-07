@@ -15,13 +15,13 @@ contract CounterUpgradeTest is Script {
     bytes32 constant IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
     address public PROXY_ADMIN_ADDRESS;
     address public IMPLEMENTATION_ADDRESS;
-    address public USER = makeAddr("user"); 
+    address public USER = makeAddr("user");
     Counter public counter;
 
     function setUp() public {
         counterScript = new CounterScript();
         address proxy = counterScript.run();
-        bytes32 data = vm.load(proxy , PROXY_ADMIN_SLOT);
+        bytes32 data = vm.load(proxy, PROXY_ADMIN_SLOT);
         PROXY_ADMIN_ADDRESS = address(uint160(uint256(data)));
         IMPLEMENTATION_ADDRESS = address(uint160(uint256(vm.load(proxy, IMPLEMENTATION_SLOT))));
         counter = Counter(proxy);
@@ -41,19 +41,19 @@ contract CounterUpgradeTest is Script {
 
     function testIncrement() public {
         vm.startPrank(USER);
-        console.log("value before increment : ",counter.counter());
+        console.log("value before increment : ", counter.counter());
         counter.increment();
         uint256 val = counter.getRealCounter();
-        console.log("value after increment : ",val);
+        console.log("value after increment : ", val);
         vm.stopPrank();
-        console.log("value : ",counter.counter());
+        console.log("value : ", counter.counter());
         assert(counter.counter() == 102);
     }
 
     function testGetRealCounter() public {
         vm.prank(USER);
         uint256 val = counter.getRealCounter();
-        console.log("value : ",val);
+        console.log("value : ", val);
         vm.stopPrank();
         assert(val == 100);
     }
@@ -75,4 +75,4 @@ contract CounterUpgradeTest is Script {
         // console.log("value afterd decrement : ",counterUpgrade.counter());
         vm.stopPrank();
     }
-} 
+}
